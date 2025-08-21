@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات پروژه - سحر مهدیان</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&family=Baloo+Bhaijaan+2:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- نوار ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>سحر مهدیان</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">خانه</a></li>
+                <li><a href="index.html#about">درباره من</a></li>
+                <li><a href="index.html#skills">مهارت‌ها</a></li>
+                <li><a href="index.html#projects">پروژه‌ها</a></li>
+                <li><a href="index.html#services">خدمات</a></li>
+                <li><a href="index.html#contact">تماس</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- بخش جزئیات پروژه -->
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-detail-header">
+                <button class="back-btn" onclick="history.back()">
+                    <i class="fas fa-arrow-right"></i> بازگشت
+                </button>
+                <h1 class="project-title">پروژه وب تجاری</h1>
+                <div class="project-meta">
+                    <span><i class="fas fa-calendar"></i> تاریخ: 1402/08/15</span>
+                    <span><i class="fas fa-tag"></i> دسته: توسعه وب</span>
+                    <span><i class="fas fa-clock"></i> مدت زمان: 3 ماه</span>
+                </div>
+            </div>
+
+            <div class="project-detail-content">
+                <div class="project-gallery">
+                    <img src="images/project1.jpg" alt="پروژه وب تجاری" class="main-image">
+                    <div class="gallery-thumbnails">
+                        <img src="images/project1.jpg" alt="تصویر 1" class="thumbnail active">
+                        <img src="images/project1-2.jpg" alt="تصویر 2" class="thumbnail">
+                        <img src="images/project1-3.jpg" alt="تصویر 3" class="thumbnail">
+                    </div>
+                </div>
+
+                <div class="project-description">
+                    <h2>توضیحات پروژه</h2>
+                    <p>
+                        این پروژه شامل طراحی و توسعه یک وب‌سایت تجاری مدرن برای یک فروشگاه آنلاین بود.
+                        وب‌سایت با استفاده از تکنولوژی‌های مدرن توسعه یافته و دارای ویژگی‌های پیشرفته
+                        مانند سیستم سبد خرید، پنل مدیریت و پرداخت آنلاین است.
+                    </p>
+
+                    <h3>فناوری‌های استفاده شده:</h3>
+                    <ul class="tech-list">
+                        <li><i class="fas fa-check"></i> React.js برای فرانت‌اند</li>
+                        <li><i class="fas fa-check"></i> Node.js و Express برای بک‌اند</li>
+                        <li><i class="fas fa-check"></i> MongoDB برای پایگاه داده</li>
+                        <li><i class="fas fa-check"></i> RESTful API</li>
+                        <li><i class="fas fa-check"></i> طراحی واکنش‌گرا (Responsive)</li>
+                    </ul>
+
+                    <h3>چالش‌ها و راه‌حل‌ها:</h3>
+                    <p>
+                        یکی از چالش‌های اصلی این پروژه، بهینه‌سازی سرعت بارگذاری صفحات و مدیریت
+                        همزمانی کاربران بود. برای حل این مسئله از تکنیک‌های کش‌کردن و بهینه‌سازی
+                        پایگاه داده استفاده شد.
+                    </p>
+
+                    <div class="project-results">
+                        <h3>نتایج پروژه:</h3>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <h4>افزایش فروش</h4>
+                                <p>35% افزایش فروش ماهانه</p>
+                            </div>
+                            <div class="result-item">
+                                <h4>رضایت کاربران</h4>
+                                <p>4.8 از 5 امتیاز رضایت</p>
+                            </div>
+                            <div class="result-item">
+                                <h4>زمان بارگذاری</h4>
+                                <p>کمتر از 2 ثانیه</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="index.html#contact" class="btn primary-btn">درخواست پروژه مشابه</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 سحر مهدیان. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+    <script>
+        // گالری تصاویر
+        document.addEventListener('DOMContentLoaded', function() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.querySelector('.main-image');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    // حذف کلاس active از همه
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    // اضافه کردن کلاس active به تصویر انتخاب شده
+                    this.classList.add('active');
+                    // تغییر تصویر اصلی
+                    mainImage.src = this.src;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
