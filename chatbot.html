@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>چت‌بات هوشمند</title>
+<style>
+/* پنجره شناور */
+#chatBot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  max-height: 500px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* هدر */
+#chatHeader {
+  background: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* محتوای چت */
+#chatContent {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f9f9f9;
+}
+
+/* پیام‌ها */
+.message {
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.userMsg {
+  background: #dcf8c6;
+  align-self: flex-end;
+}
+
+.botMsg {
+  background: #fff;
+  border: 1px solid #ddd;
+  align-self: flex-start;
+}
+
+/* فرم ورودی */
+#chatForm {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+#chatInput {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+#chatSend {
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div id="chatBot">
+  <div id="chatHeader">چت‌بات هوشمند</div>
+  <div id="chatContent"></div>
+  <form id="chatForm">
+    <input type="text" id="chatInput" placeholder="پیام خود را بنویسید..." autocomplete="off"/>
+    <button type="submit" id="chatSend">ارسال</button>
+  </form>
+</div>
+
+<script>
+// سابقه گفتگو در localStorage
+let chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+// بارگذاری پیام‌های قبلی
+const chatContent = document.getElementById('chatContent');
+chatHistory.forEach(msg => addMessage(msg.text, msg.user));
+
+// افزودن پیام به صفحه
+function addMessage(text, user) {
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('message');
+  msgDiv.classList.add(user === 'user' ? 'userMsg' : 'botMsg');
+  msgDiv.innerHTML = text;
+  chatContent.appendChild(msgDiv);
+  chatContent.scrollTop = chatContent.scrollHeight;
+}
+
+// ارسال پیام
+document.getElementById('chatForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  if (!message) return;
+  addMessage(message, 'user');
+  chatHistory.push({text: message, user: 'user'});
+  localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  input.value = '';
+
+  // پاسخ از هوش مصنوعی
+  const botReply = await getBotResponse(message);
+  addMessage(botReply, 'bot');
+  chatHistory.push({text: botReply, user: 'bot'});
+  localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+});
+
+// تابع تماس با OpenAI API
+async function getBotResponse(message) {
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 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'
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini',
+        messages: [{role: 'user', content: message}],
+        max_tokens: 200
+      })
+    });
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (err) {
+    console.error(err);
+    return "متاسفم، خطایی رخ داد. لطفا دوباره امتحان کنید.";
+  }
+}
+
+// باز و بسته کردن پنجره چت
+const chatBot = document.getElementById('chatBot');
+const chatHeader = document.getElementById('chatHeader');
+let open = true;
+chatHeader.addEventListener('click', () => {
+  open = !open;
+  document.getElementById('chatContent').style.display = open ? 'block' : 'none';
+  document.getElementById('chatForm').style.display = open ? 'flex' : 'none';
+});
+</script>
+
+</body>
+</html>
